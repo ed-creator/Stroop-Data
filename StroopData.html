@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Project 1 - Data Analytics</title>
+<title>StroopData</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11767,15 +11767,125 @@ Dependent variable = Time taken to finish the ink color list</p>
 <p>2.
 What is an appropriate set of hypotheses for this task? What kind of statistical test do you expect to perform? Justify your choices.</p>
 <p>Null Hypothesis:
-There will be no statistical difference between times recorded for partiicpants given congruent or incongruent words
-x = 0</p>
+There will be no statistical difference in the average population response time between times recorded for congruent or incongruent words.
+Ho: μ = μ0</p>
 <p>Alternate Hypothesis:
-Participants that are shown inconguruent words will take significantly longer to complete the task than those given congruent words
-x does not = 0</p>
-<p>I expect to perform a one tail t-test since only a sample of the population is being tested and only one direction is being tested in the alternate hypothesis.</p>
+Average population response time will be significantly longer for incongruent words than for congruent words.
+Ha: μ &lt; μ0</p>
+<p>Test to use: Dependent t-test
+Justification &amp; assumptions:</p>
+<ol>
+<li>There is a sample size of 24 paritcipants, since a sample and not the population is being tested it is appropriate to use the t-test and not a z-test</li>
+<li>Participants that have <em>paired</em> data since each participant was given each stroop test. This is why the <em>dependent</em> test is used</li>
+<li>The sample size is quite small at 24 but is assumed to be normal since it is an assumed random sample from a normal distribution - the below histogram shows not an exact normal distribution however for the purposes of this test we can assume a normal distribution for the sample dispite there being a slight skew.  </li>
+<li>I expect to perform a one tail t-test since only one direction is being tested in the alternate hypothesis.</li>
+<li>A confidence level of 5% will be used</li>
+</ol>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">stroop_data_difference</span> <span class="o">=</span> <span class="n">stroop_data</span><span class="p">[</span><span class="s1">&#39;Congruent&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">stroop_data</span><span class="p">[</span><span class="s1">&#39;Incongruent&#39;</span><span class="p">]</span>
+<span class="n">stroop_data_difference</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[24]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1144db8d0&gt;</pre>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWwAAAECCAYAAADaYe2TAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+AAALEgAACxIB0t1+/AAADVJJREFUeJzt3H+M5HV5wPH33h5QrrtcWZxrBTQnJvvUJgQTm2qplcYf
+Jf6oBWPShGIC2FQsiaANjZRQkyYFE5RqY5DEFJqiNmoqijEp2JQ0ShpoSfpT86yVHlci8dabZdnN
+wpXb2/6xc+xxN7sze/ud2X1236+E5Gbvu5997jNf3vvdmZ0ZWVpaQpK09e3a7AEkSf0x2JJUhMGW
+pCIMtiQVYbAlqQiDLUlF7O7noIj4OPBe4Azg7sy8b6BTSZJO0fMKOyIuA341My8FfgN41aCHkiSd
+qp8r7MuB/4yIbwDjwM2DHUmS1E0/wX4F8GrgPcBFwIPALw5yKEnSqfp50vEw8FBmHs3MKeCFiHjF
+gOeSJJ2knyvs7wEfAf48Is4H9rAc8a6WlpaWRkZGGhpPktY2NTXFB275Mnv27mt87YXZQ9x/x1VM
+Tk42vnYXPcPZM9iZ+e2I+PWIeLyz4B9k5qrvGDUyMsL09Nz6xtymWq1x96LDvVjhXqxoYi/a7Xn2
+7N3H2LkXNDTVqesP4/5qtcZ7HtPXr/Vl5sc3PI0kaUN84YwkFWGwJakIgy1JRRhsSSrCYEtSEQZb
+koow2JJUhMGWpCIMtiQVYbAlqQiDLUlFGGxJKsJgS1IRBluSijDYklSEwZakIgy2JBVhsCWpCIMt
+SUUYbEkqwmBLUhEGW5KKMNiSVITBlqQiDLYkFWGwJakIgy1JRRhsSSrCYEtSEbv7OSgingBmOzf/
+JzM/OLiRJEnd9Ax2RJwFkJlvHfw4kqTV9HOFfQnwsxHxEDAK3JqZjw12LEnSyfp5DHsBuDMzLwc+
+DHwpInzsW5KGrJ/wTgFfAsjMHwKHgVcOcihJ0qn6eUjkOuBi4IaIOB8YB55Z6xNarfEGRtse3IsV
+7sUK92LFRvdiZmasoUm6m5gY2zL3Vz/B/kvgvoj4LnAMuC4zj631CdPTc03MVl6rNe5edLgXK9yL
+FU3sRbs939A0q68/jPurn28KPYOdmS8CVzcxkCTp9PnkoSQVYbAlqQiDLUlFGGxJKsJgS1IRBluS
+ijDYklSEwZakIgy2JBVhsCWpCIMtSUUYbEkqwmBLUhEGW5KKMNiSVITBlqQiDLYkFWGwJakIgy1J
+RRhsSSrCYEtSEQZbkoow2JJUhMGWpCIMtiQVYbAlqQiDLUlFGGxJKsJgS1IRBluSitjdz0ERsQ/4
+F+DtmTk12JEkSd30vMKOiN3APcDC4MeRJK2mn4dEPgV8HvjxgGeRJK1hzYdEIuIa4FBmfici/ng4
+I0nDt7i4yIEDTw5kXRhhdHTl2mhmZox2e77xdZu0f/9FjI6ODmRtnb5ej2FfCxyLiHcArwf+OiLe
+m5mH1vqkVmu8qfnKcy9WbOW9mJqa4sY7H2TP3n2Nrnv46R9w9vh5ZdYFWJg9xP13XMXk5GTja3ez
+0fNiZmasoUm6m5gY2zLn7prBzszLjv85Ih4BPtQr1gDT03MNjFZfqzXuXnRs9b1ot+fZs3cfY+de
+0Oi6C7M/KbXuce32/FDurybOi43+tNLP+sPai17W8/PU0umPIknaqL5+rQ8gM986yEEkSWvzhTOS
+VITBlqQiDLYkFWGwJakIgy1JRRhsSSrCYEtSEQZbkoow2JJUhMGWpCIMtiQVYbAlqQiDLUlFGGxJ
+KsJgS1IRBluSijDYklSEwZakIgy2JBVhsCWpCIMtSUUYbEkqwmBLUhEGW5KKMNiSVITBlqQiDLYk
+FWGwJakIgy1JRezudUBE7AK+AARwDLg+M78/6MEkSS/XzxX2bwFLmflm4Dbg9sGOJEnqpmewM/Ob
+wO93bu4HZgY5kCSpu54PiQBk5rGI+CvgCuD9A51IktRVX8EGyMxrImIf8HhEvC4zn1/t2FZrvJHh
+tgP3YsVW3ouZmbHNHmFLmZgYG9r9tdGvM+j7bph70Us/TzpeDVyYmZ8EXgAWWX7ycVXT03PNTFdc
+qzXuXnRs9b1ot+c3e4Qtpd2eH8r91cR5Mej7bph70Us/V9hfB+6LiH/sHH9jZh7Z4GySpHXqGezM
+XAB+ZwizSJLW4AtnJKkIgy1JRRhsSSrCYEtSEQZbkoow2JJUhMGWpCIMtiQVYbAlqQiDLUlFGGxJ
+KsJgS1IRBluSijDYklSEwZakIgy2JBVhsCWpCIMtSUUYbEkqwmBLUhEGW5KKMNiSVITBlqQiDLYk
+FWGwJakIgy1JRRhsSSrCYEtSEQZbkorYvdZfRsRu4F5gP3Am8GeZ+a0hzCVJOkmvK+yrgZ9m5luA
+dwKfG/xIkqRu1rzCBr4KfK3z513Ai4MdR5K0mjWDnZkLABExznK4bx3GUJI2z9KxYxw8+FTj6y4u
+LgIjjI6u/GA/MzNGuz2/oXUHMetW1esKm4h4FfB14HOZ+ZV+Fm21xjc617bhXqzYynsxMzO22SNs
+Gc/PTfPpr/yUPXufaXTdw0//gLPHz2PP3n2Nr3veha9rdM0TTUyMbZlzt9eTjj8PPATckJmP9Lvo
+9PTcRufaFlqtcfeiY6vvxUav8rabPXv3MXbuBY2uuTD7k4GtO0jt9vxQzt1+vin0usK+Bfg54LaI
++BNgCXhnZh7Z+HiSpPXo9Rj2TcBNQ5pFkrQGXzgjSUUYbEkqwmBLUhEGW5KKMNiSVITBlqQiDLYk
+FWGwJakIgy1JRRhsSSrCYEtSEQZbkoow2JJUhMGWpCIMtiQVYbAlqQiDLUlFGGxJKsJgS1IRBluS
+ijDYklSEwZakIgy2JBVhsCWpCIMtSUUYbEkqwmBLUhEGW5KKMNiSVERfwY6IN0bEI4MeRpK0ut29
+DoiIm4EPAPODH0eStJp+rrD/G7hy0INIktbWM9iZ+QBwdAizSJLW0PMhke3myJEjfPru+zjzZ8Ya
+X/viyVdz+dve0vi6i4uLHDjwZOPrAuzffxGjo6MDWVtSs9YT7JF+D2y1xk9jlOF49tlF/uuZEc6a
+OL/xtc/58aFT/u1N7MXU1BQ33vkge/bu2/BaJ1qYPcT9d1zF5ORko+uuZiufFzMzzX8D1/YwMTG2
+Zc7d9QR7qd8Dp6fnTmOU4ZidnWPpWN//lHVZeP7/XvZvb7XGG9mLdnuePXv3MXbuBRteq9vaw7i/
+mtqLQWm3fU5d3Q3z/5Fe+gp2Zj4FXLrRgSRJp88XzkhSEQZbkoow2JJUhMGWpCIMtiQVYbAlqQiD
+LUlFGGxJKsJgS1IRBluSijDYklSEwZakIgy2JBVhsCWpCIMtSUUYbEkqwmBLUhEGW5KKMNiSVITB
+lqQiDLYkFWGwJakIgy1JRRhsSSrCYEtSEQZbkoow2JJUhMGWpCIMtiQVsbvXARExAtwNXAK8APxe
+Zj456MEkSS/XzxX2FcBZmXkpcAtw12BHkiR100+w3wz8HUBmPgb88kAnkiR11U+wzwFmT7h9NCJ8
+7FuShqznY9jAc8D4Cbd3ZeaxAc0zcLt27eLocwc4NnKk8bUPHz3Cj370w5duz8yM0W7Pb3jdgwef
+YmH20IbXOdnC7CEOHnyq8XW7aWovBmVQe/z8XBsYKbPuINeuti4wkHNiI0aWlpbWPCAi3ge8JzOv
+i4g3Abdl5ruHMp0k6SX9XGE/ALwjIh7t3L52gPNIklbR8wpbkrQ1+OShJBVhsCWpCIMtSUUYbEkq
+op/fEukpIs4Bvsjyi2zOAD6WmY9FxBXAp4CDnUM/kZnfbeJrblVr7MWbgM8ALwLfycw/3cQxhyoi
+rgTen5m/27m9486L47rsxRuBz7IDzwuAiHgamOrc/KfMvHUz5xm29b5XUyPBBj4G/H1m/kVETAJ/
+A7yh89/NmflAQ1+ngtX24vPAlZl5ICK+HRGXZOa/beqkQxARnwF+E/jXEz68E8+L1fbiHnbgeQEQ
+Ea8FnsjM397sWTbRS+/V1PnmfVfnY101Fey7gOMvHTwDeL7z5zcAr4+IjwKPA39U+VWSfTplLyJi
+HDgzMw90Pv4Q8HZgJ/yP+SjLv8v/oRM+thPPCzhpL3b4eQHL58GFEfEPwALLP41O9fic7eZl79UU
+EWu+V9O6gx0R1wEfBZZYfj3oEnBtZj4REb8A3A98pHP4w8A3OlcP9wDXs3z5vy2sYy/OYfkl/sfN
+Aa8Z8rgDtcZefC0iLjvp8J16Xpy8F9v+vDhulT25Abg9M/82In6N5YcSf2XzptwUXd+rabULmHUH
+OzPvBe49+eMRcTHwZeAPM/N7nQ/fl5nHh/km8L71fr2trN+96FxJnXPCIePAs8OZcjhW24tV7Mjz
+oovn2ObnxXHd9iQizgaOdv7+0Yh45WbMtsnW9V5NjfyWSET8EvBV4KrMfPiEv/r3iDi/8+e3AU80
+8fW2sm57kZlzwJGIeE3nSYbLgR3xJNsqdtx50Y3nBZ8AbgKIiEuA/93ccTbFo8C7ADq/mPAfax3c
+1GPYtwNnAZ/tnHjPZuaVwAeBByJiAfg+8IWGvt5WttpefJjlq+5dwMOZ+c+bOONm24nnxWquZ+ee
+F58EvhgR72b5t2Su2dxxNsW63qvJ9xKRpCJ84YwkFWGwJakIgy1JRRhsSSrCYEtSEQZbkoow2JJU
+hMGWpCL+H4nKqWRrIYUEAAAAAElFTkSuQmCC
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -11807,12 +11917,13 @@ Provide one or two visualizations that show the distribution of the sample data.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="kn">as</span> <span class="nn">scp</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
-<span class="n">stroop_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;stroopdata.csv&#39;</span><span class="p">)</span>
+<span class="n">stroop_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;P1/stroopdata.csv&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11837,7 +11948,7 @@ Provide one or two visualizations that show the distribution of the sample data.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">stroop_data</span> <span class="o">=</span> <span class="n">stroop_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Congruent&#39;</span><span class="p">)</span>
